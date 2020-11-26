@@ -15,5 +15,5 @@ export interface IWorkspace {
   id?: WorkspaceId;
   owner: string;
   status: WorkspaceStatus;
-  createdAt: Date;
+  createdAt?: Date;
 }

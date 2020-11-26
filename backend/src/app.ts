@@ -7,6 +7,9 @@ import 'express-async-errors';
 
 import router from './routes';
 import logger from '@shared/logger';
+import { initDb } from 'src/mock/db';
+
+initDb();
 
 const app = express();
 const { BAD_REQUEST } = StatusCodes;
@@ -25,7 +28,7 @@ if (process.env.NODE_ENV === 'production') {
 }
 
 // Add router
-app.use('/', router);
+app.use('/api', router);
 
 // Print API errors
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
