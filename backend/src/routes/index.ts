@@ -1,6 +1,8 @@
 import { Router, Request, Response } from 'express';
 import { getDb } from 'src/mock/db';
 import { WorkspaceStatus } from 'src/types/Workspace';
+import { WSMessageType } from 'src/types/WSMessage';
+import { broadcast } from 'src/wsServer';
 
 const db = getDb();
 
@@ -27,6 +29,7 @@ router.put('/events/:eventId/workspaces/:workspaceId', (req: Request, res: Respo
   const { eventId, workspaceId } = req.params;
   const { owner, status = WorkspaceStatus.PREPARING } = req.body;
   const workspace = db.updateWorkspace(eventId, workspaceId, { owner, status });
+  broadcast({ type: WSMessageType.WORKSPACE_LIST, data: db.getWorkspaces() });
   res.send({ workspace });
 });
 router.get('/events/:eventId/workspaces', (req: Request, res: Response) => {
@@ -39,6 +42,7 @@ router.post('/events/:eventId/workspaces', (req: Request, res: Response) => {
   const { owner, status = WorkspaceStatus.PREPARING } = req.body;
   const createdAt = new Date();
   const workspaces = db.addWorkspaceToEvent(eventId, { owner, createdAt, status });
+  broadcast({ type: WSMessageType.WORKSPACE_LIST, data: db.getWorkspaces() });
   res.send({ workspaces });
 });
 
