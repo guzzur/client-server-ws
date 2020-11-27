@@ -1,10 +1,25 @@
 # client-server-ws
 
+## TL;DR
+
+To solve our use-cases in a manner that will enable us to continue using the code even after the system starts gaining more and more active user, I chose to go with `ws` for the websockets server and native browser's `WebSocket` for the client.
+
+The given code only supplies the solution for Step 1, but we can make it work for Steps 2 and 3 with not too much effort, without changing the server's or client's websockets libraries.
+
+For more details you can check out the in depth comparison [here](./docs/ws-comparison.md).
+
 ## Running instructions
 
-### Dev mode
+This was developed and tested under:
 
-#### Frontend
+```sh
+node -v
+# v14.12.0
+uname -a
+# Darwin 19.6.0 Darwin Kernel Version 19.6.0
+```
+
+### Frontend
 
 ```sh
 cd frontend
@@ -14,7 +29,7 @@ npm start
 # will boot the react app on port 3001
 ```
 
-#### Backend
+### Backend
 
 ```sh
 cd backend
@@ -66,3 +81,4 @@ wscat -c localhost:8080 # or npx wscat -c localhost:8080
 #   -d '{"owner": "me@razzy.dev"}'
 
 # < [..., {"owner":"me@razzy.dev","createdAt":"2020-11-27T12:26:33.319Z","id":"cec46d4b-4410-4212-83a0-275bce140a74","eventId":"2"}]
+```
