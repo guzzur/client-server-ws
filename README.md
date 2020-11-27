@@ -22,6 +22,7 @@ nvm install
 npm install
 npm run start:dev
 # will boot the express app on port 3002
+# will boot the ws server on port 8080
 ```
 
 ## REST API commands
@@ -52,3 +53,17 @@ curl -XPUT localhost:3002/api/events/0/workspaces/08b09bc2-f848-41a5-a018-2ecc43
   -H "Content-Type: application/json" \
   -d '{"owner": "someone@else.com", "status": "deleted"}'
 ```
+
+## WScat commands
+
+```sh
+npm i -g wscat
+wscat -c localhost:8080 # or npx wscat -c localhost:8080
+# < connection established
+
+# In another terminal session:
+# curl -XPOST localhost:3002/api/events/2/workspaces \
+#   -H "Content-Type: application/json" \
+#   -d '{"owner": "me@razzy.dev"}'
+
+# < [..., {"owner":"me@razzy.dev","createdAt":"2020-11-27T12:26:33.319Z","id":"cec46d4b-4410-4212-83a0-275bce140a74","eventId":"2"}]
