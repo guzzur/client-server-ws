@@ -1,8 +1,11 @@
 import React, { useEffect } from 'react';
+import { Card, Row, Col } from 'react-bootstrap';
+
 import { useRecoilState } from 'recoil';
 import { workspaceListState } from '../recoil/atoms';
 
 import { ws, getWorkspaces } from '../services/network';
+import { WorkspaceStatus } from '../types/Workspace';
 import { WSMessageType } from '../types/WSMessage';
 
 function EventsList() {
@@ -42,10 +45,41 @@ function EventsList() {
     getWorkspacesOnLoad();
   }, [setWorkspaceList]);
 
+  const workspaceStatusToEmoji = (workspaceStatus: WorkspaceStatus) => {
+    switch (workspaceStatus) {
+      case WorkspaceStatus.DELETED:
+        return '❌';
+      case WorkspaceStatus.OFFLINE:
+        return '🚫';
+      case WorkspaceStatus.PREPARING:
+        return '🏃';
+      case WorkspaceStatus.READY:
+        return '👷';
+      case WorkspaceStatus.TERMINATED:
+        return '💀';
+      default:
+        return '👽';
+    }
+  };
+
   return (
     <div className="events-list-wrapper">
       {workspaceList.map((workspace) => (
-        <div key={workspace.id}>{workspace.owner}</div>
+        <Card key={workspace.id}>
+          <Card.Body>
+            <Row>
+              <Col sm={12} md={3}>
+                {workspaceStatusToEmoji(workspace.status)} {workspace.status}
+              </Col>
+              <Col sm={12} md={3}>
+                {workspace.createdAt}
+              </Col>
+              <Col sm={12} md={6}>
+                {workspace.owner}
+              </Col>
+            </Row>
+          </Card.Body>
+        </Card>
       ))}
     </div>
   );
