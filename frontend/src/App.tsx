@@ -4,6 +4,8 @@ import { useRecoilState } from 'recoil';
 import { isAppLoadedState } from './recoil/atoms';
 import './style/app.css';
 
+import EventsList from './components/WorkspacesList';
+
 function App() {
   const [isAppLoaded, setIsAppLoaded] = useRecoilState(isAppLoadedState);
 
@@ -11,7 +13,7 @@ function App() {
     setIsAppLoaded(true);
   });
 
-  return <div className="app-container">{isAppLoaded ? 'Running' : 'Loading'}</div>;
+  return <div className="app-container">{isAppLoaded && <EventsList />}</div>;
 }
 
 export default App;
