@@ -2,6 +2,7 @@ import morgan from 'morgan';
 import helmet from 'helmet';
 import StatusCodes from 'http-status-codes';
 import express, { NextFunction, Request, Response } from 'express';
+import cors from 'cors';
 
 import 'express-async-errors';
 
@@ -14,6 +15,7 @@ initDb();
 const app = express();
 const { BAD_REQUEST } = StatusCodes;
 
+app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
