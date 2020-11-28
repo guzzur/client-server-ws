@@ -8,6 +8,15 @@ The given code only supplies the solution for Step 1, but we can make it work fo
 
 For more details you can check out the in depth comparison [here](./docs/ws-comparison.md).
 
+## Open issues
+
+Unfortunatelly this code does not:
+
+- Solve Steps 2 and 3
+- Have input validations (schemas & logic)
+- Have tests, metrics and proper logging
+- Use auth[n/z]
+
 ## Running instructions
 
 This was developed and tested under:
